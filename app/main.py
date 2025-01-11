@@ -16,8 +16,7 @@ if not os.environ.get("BOT_TOKEN"):
 ####
 
 logging.basicConfig(
-    # filename='/srv/tg-bot-v3/log.log',
-    format='\x1b[32m%(levelname)s\x1b[0m:     %(name)s[%(process)d] %(asctime)s - %(message)s',
+    format='%(levelname)s: %(name)s[%(process)d] - %(asctime)s - %(message)s',
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
@@ -27,6 +26,9 @@ DP = Dispatcher()
 
 
 async def generate_private_caption( message: types.Message ) -> None:
+    
+    if message.forward_origin and message.forward_origin.sender_user.username == 'elibfb2_v3_bot':
+        return
 
     document = await BOT.get_file( message.document.file_id )
 

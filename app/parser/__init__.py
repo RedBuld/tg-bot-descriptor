@@ -45,27 +45,27 @@ async def process_caption( book: Book ) -> str:
     caption = ''
     
     if book.title and book.url:
-        caption += f'<b><a href="{book.url}">{book.title}</a></b>\n'
+        caption += f'<b><a href="{book.url}">{book.title}</a></b>'
     elif book.title:
-        caption += f'<b>{book.title}</b>\n'
+        caption += f'<b>{book.title}</b>'
     
     if len( book.authors ) > 0:
         authors: str = ', '.join( list( filter( None, book.authors ) ) )
         if authors:
             if len( book.authors ) > 1:
-                caption += f'Авторы: {authors}\n'
+                caption += f'\nАвторы: {authors}'
             else:
-                caption += f'Автор: {authors}\n'
+                caption += f'\nАвтор: {authors}'
     
     if book.seria:
         seria = book.seria.name
         if book.seria.number:
-            caption += f'Серия: {seria} #{book.seria.number}\n'
+            caption += f'\nСерия: {seria} #{book.seria.number}'
 
     if book.chapters > 0:
         if book.chapters > 1:
-            caption += f'\nПо: "{book.last_chapter}"'
-        else:
-            caption += f'\n{book.last_chapter}'
+            caption += f'\n\nПо: "{book.last_chapter}"'
+        elif book.last_chapter != book.title:
+            caption += f'\n\n{book.last_chapter}'
 
     return caption
